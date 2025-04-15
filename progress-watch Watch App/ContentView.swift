@@ -8,12 +8,18 @@
 import SwiftUI
 
 struct ContentView: View {
+
+    @StateObject var vm: ContentViewModel = .init()
+    
     var body: some View {
         VStack {
-            Image(systemName: "globe")
-                .imageScale(.large)
-                .foregroundStyle(.tint)
-            Text("Hello, world!")
+            Text("\(vm.progressTime) %")
+                .font(.system(size: 40, weight: .bold, design: .default))
+            Button(action: {
+                vm.update();
+            }, label: {
+                Text("Update");
+            })
         }
         .padding()
     }

@@ -9,14 +9,15 @@ import Foundation
 
 final class ContentViewModel: ObservableObject {
     
-    @Published var progressTime: String = "";
+    @Published var progressTime: String = ""; // 表示用(パーセント表記)
+    @Published var progressValue: Double = 0.0; // 0.05
     
-    private var dayTimestamp: Double = 86400.0;
+    private let dayTimestamp: Double = 86400.0;
     
     init() {
         update();
     }
-        
+    
     public func update() {
         let calendar = Calendar(identifier: .gregorian);
         
@@ -27,10 +28,8 @@ final class ContentViewModel: ObservableObject {
         let startTimestamp = startOfDay.timeIntervalSince1970;
         
         let diffTimestamp = nowTimestamp - startTimestamp;
-        let rawProgress = diffTimestamp / Double(dayTimestamp) * 100;
-        let progress = String(format: "%.4f", rawProgress);
-        
-        progressTime = "\(progress)";
+        progressValue = diffTimestamp / Double(dayTimestamp);
+        progressTime = String(format: "%.3f", progressValue * 100);
     }
     
 }
